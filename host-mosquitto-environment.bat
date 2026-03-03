@@ -39,6 +39,20 @@ if not exist "%ACL_FILE%" (
     echo # user: admin>> "%ACL_FILE%"
     echo user admin>> "%ACL_FILE%"
     echo topic readwrite #>> "%ACL_FILE%"
+    echo.>> "%ACL_FILE%"
+    echo # user: watcher>> "%ACL_FILE%"
+    echo user watcher>> "%ACL_FILE%"
+    echo topic readwrite winsv_wtpsvn/#>> "%ACL_FILE%"
+    echo topic readwrite winsv_ftpsvn/#>> "%ACL_FILE%"
+    echo topic readwrite winsv_atpsvn/#>> "%ACL_FILE%"
+    echo topic readwrite winsv_ttpsvn/#>> "%ACL_FILE%"
+    echo.>> "%ACL_FILE%"
+    echo # user: facade>> "%ACL_FILE%"
+    echo user facade>> "%ACL_FILE%"
+    echo topic read winsv_wtpsvn/#>> "%ACL_FILE%"
+    echo topic read winsv_ftpsvn/#>> "%ACL_FILE%"
+    echo topic read winsv_atpsvn/#>> "%ACL_FILE%"
+    echo topic read winsv_ttpsvn/#>> "%ACL_FILE%"
 )
 
 if not exist "%CONF_FILE%" (
@@ -50,8 +64,6 @@ if not exist "%CONF_FILE%" (
     echo allow_anonymous true>> "%CONF_FILE%"
     echo password_file %PASSWD_FILE%>> "%CONF_FILE%"
     echo acl_file %ACL_FILE%>> "%CONF_FILE%"
-    echo.>> "%CONF_FILE%"
-    echo # log_type all>> "%CONF_FILE%"
 )
 
 if not exist "%CONFIG_FILE%" (
@@ -160,11 +172,17 @@ if not exist "%PASSWD_FILE%" (
     echo.
     echo    1. Mở cmd và trỏ tới thư mục cài đặt Mosquitto ^(nơi có mosquitto_passwd.exe^)
     echo.
-    echo    2. Chạy lệnh sau và nhập password khi được yêu cầu:
+    echo    2. Chạy lệnh sau và nhập password tạo user admin khi được yêu cầu:
     echo.
-    echo       %GREEN%mosquitto_passwd -c "%PASSWD_FILE%" admin%RESET%
+    echo %GREEN%mosquitto_passwd -c "%PASSWD_FILE%" admin%RESET%
     echo.
-    echo    3. Chạy lại run.bat sau khi tạo xong.
+    echo    3. Chạy hai lệnh sau và nhập password tạo user watcher và facade (không có lệnh -c^)
+    echo.
+    echo %GREEN%mosquitto_passwd "%PASSWD_FILE%" watcher%RESET%
+    echo.
+    echo %GREEN%mosquitto_passwd "%PASSWD_FILE%" facade%RESET%        
+    echo.
+    echo    4. Chạy lại run.bat sau khi tạo xong.
     echo.
     echo  -------------------------------------------------------------------------------
     echo.
